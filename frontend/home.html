@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MultiSow - Multi-Tier Crop System</title>
+    <meta name="description"
+        content="Design your multi-tier crop system with AI-powered recommendations. Maximize yield, conserve water, and increase farm profitability.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=6">
+    <style>
+        /* Enhanced Home Page Styles */
+
+        /* Stats Grid Enhancement */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: var(--section-spacing);
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.75rem;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(45, 80, 22, 0.08);
+            border: 1px solid rgba(145, 199, 136, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(45, 80, 22, 0.15);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-value {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::before {
+            content: 'grass';
+            font-family: 'Material Icons';
+            font-size: 1.5rem;
+            font-weight: normal;
+            font-style: normal;
+            -webkit-font-feature-settings: 'liga';
+            font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Research Footer */
+        .research-footer {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 1.75rem 2rem;
+            border-radius: 16px;
+            margin-top: var(--section-spacing);
+            border-left: 4px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .research-footer:hover {
+            box-shadow: 0 4px 20px rgba(45, 80, 22, 0.1);
+        }
+
+        .research-footer-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .research-footer-content {
+            flex: 1;
+        }
+
+        .research-footer-content p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .research-footer-content strong {
+            color: var(--text-main);
+        }
+
+        .research-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .research-footer a:hover {
+            color: var(--secondary-color);
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Content -->
+    <div class="dashboard-container">
+        <!-- Welcome Section -->
+        <header class="page-header">
+            <h1><span class="material-icons">eco</span> Design Your Multi-Tier Plot</h1>
+            <p>Enter your plot size and choose a crop model to get personalized recommendations for maximum yield and
+                sustainability.</p>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid fade-in-up fade-in-up-delay-1">
+            <div class="stat-card" title="40% with conventional irrigation, up to 70% with drip systems">
+                <span class="stat-value">40-70%</span>
+                <span class="stat-label">Water Conserved</span>
+            </div>
+            <div class="stat-card" title="Based on coconut + banana + turmeric + pepper system for 2 acres">
+                <span class="stat-value">300+ Q</span>
+                <span class="stat-label">Est. Yield (2 acres)</span>
+            </div>
+            <div class="stat-card" title="Conservative estimate based on Indian market prices and multi-tier systems">
+                <span class="stat-value">₹8-12L</span>
+                <span class="stat-label">Est. Annual Revenue</span>
+            </div>
+            <div class="stat-card" title="Optimized across all vertical layers through strategic crop placement">
+                <span class="stat-value">88%</span>
+                <span class="stat-label">Sunlight Captured</span>
+            </div>
+        </div>
+
+        <!-- Model Selection -->
+        <section>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 class="section-title" style="margin-bottom: 0;">Recommended Crop Models</h2>
+                <button class="btn-primary" onclick="window.location.href='strata.html?mode=custom'"
+                    style="display: flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.75rem; font-size: 1rem;">
+                    <span>Create Custom Model</span>
+                </button>
+            </div>
+            <div class="models-grid fade-in-up fade-in-up-delay-3" id="models-grid">
+                <!-- Models will be injected here via JS -->
+            </div>
+        </section>
+
+        <!-- AI Planner -->
+        <section style="margin-top: var(--section-spacing);">
+            <h2 class="section-title">AI Farm Planner</h2>
+            <div class="content-card" style="padding: 2rem;">
+                <p style="color: var(--text-muted); margin-bottom: 1.25rem;">
+                    Enter your land + soil + budget and get a complete multi-tier plan optimized for your constraints.
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <label style="display:block; font-weight:600; margin-bottom:0.5rem;">Plot Size (acres)</label>
+                        <input id="ai-acres" class="form-input" type="number" min="0.5" step="0.5" value="2">
+                    </div>
+                    <div>
+                        <label style="display:block; font-weight:600; margin-bottom:0.5rem;">Soil Type</label>
+                        <select id="ai-soil" class="form-input">
+                            <option value="alluvial">Alluvial</option>
+                            <option value="black">Black</option>
+                            <option value="red">Red</option>
+                            <option value="laterite">Laterite</option>
+                            <option value="desert">Desert</option>
+                            <option value="mountain">Mountain</option>
+                            <option value="saline">Saline</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display:block; font-weight:600; margin-bottom:0.5rem;">Budget (₹)</label>
+                        <input id="ai-budget" class="form-input" type="number" min="10000" step="10000" value="250000">
+                    </div>
+                </div>
+                <div style="display:flex; gap: 1rem; margin-top: 1.25rem; align-items:center; flex-wrap: wrap;">
+                    <div style="min-width: 240px; flex: 1;">
+                        <label style="display:block; font-weight:600; margin-bottom:0.5rem;">Goal</label>
+                        <select id="ai-goal" class="form-input">
+                            <option value="maximize_profit" selected>Maximize Profit</option>
+                            <option value="maximize_yield">Maximize Yield</option>
+                            <option value="low_risk">Low Risk</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" onclick="runAIPlanner()" style="padding: 0.9rem 1.6rem;">
+                        Generate Plan
+                    </button>
+                    <button id="ai-apply-btn" class="btn-secondary" style="display:none;" onclick="applyAIPlan()">
+                        Apply to Strata Designer
+                    </button>
+                </div>
+
+                <div id="ai-plan-output" style="margin-top: 1.5rem; display:none;">
+                    <div class="divider"></div>
+                    <div id="ai-plan-summary" style="margin-bottom: 1rem;"></div>
+                    <div id="ai-plan-tiers" style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;"></div>
+                    <div style="margin-top: 1rem;">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.1rem; margin-bottom: 0.75rem;">Budget
+                            Breakdown</h3>
+                        <div id="ai-plan-budget" style="display:grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Transparency Footer -->
+        <div class="research-footer">
+            <div class="research-footer-icon"><span class="material-icons md-32"
+                    style="color: var(--primary-color);">bar_chart</span></div>
+            <div class="research-footer-content">
+                <p>
+                    <strong>Research-Backed Data:</strong> All values are based on peer-reviewed agricultural research
+                    from ICAR, MDPI, and field trials across India. Actual results may vary based on soil type, climate,
+                    and management practices.
+                </p>
+                <a href="research.html">View Success Stories & Research →</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="navigation.js?v=6"></script>
+    <script>createNavigation('home');</script>
+    <script src="backend-api.js?v=3"></script>
+    <script src="preset-models.js?v=6"></script>
+    <script src="model-details.js?v=6"></script>
+    <script src="app.js?v=6"></script>
+    <script>
+        let _aiPlan = null;
+
+        function formatINR(n) {
+            try { return '₹' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: 0 }); }
+            catch { return '₹' + n; }
+        }
+
+        async function runAIPlanner() {
+            const acres = parseFloat(document.getElementById('ai-acres').value || '0');
+            const soil_type = document.getElementById('ai-soil').value;
+            const budget_inr = parseFloat(document.getElementById('ai-budget').value || '0');
+            const goal = document.getElementById('ai-goal').value;
+
+            const output = document.getElementById('ai-plan-output');
+            const summary = document.getElementById('ai-plan-summary');
+            const tiersEl = document.getElementById('ai-plan-tiers');
+            const budgetEl = document.getElementById('ai-plan-budget');
+            const applyBtn = document.getElementById('ai-apply-btn');
+
+            output.style.display = 'none';
+            applyBtn.style.display = 'none';
+            _aiPlan = null;
+
+            try {
+                const plan = await window.backendAPI.generateAIPlan({ acres, soil_type, budget_inr, goal });
+                _aiPlan = plan;
+                output.style.display = 'block';
+                applyBtn.style.display = 'inline-flex';
+
+                summary.innerHTML = `
+                    <div class="stat-card" style="padding: 1.25rem;">
+                        <div style="display:flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+                            <div>
+                                <div style="font-weight: 800; font-size: 1.1rem; margin-bottom: 0.25rem;">
+                                    Recommended: ${plan.recommended_model_name}
+                                </div>
+                                <div style="color: var(--text-muted); font-size: 0.9rem;">
+                                    Revenue range: <strong>${formatINR(plan.expected_annual_revenue_range_inr[0])}</strong> – <strong>${formatINR(plan.expected_annual_revenue_range_inr[1])}</strong> / year
+                                </div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-size:0.85rem; color: var(--text-muted);">Est. setup cost</div>
+                                <div style="font-weight: 800; font-size: 1.1rem;">${formatINR(plan.budget_breakdown.total)}</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 0.75rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+                            ${plan.why_this_plan.map(x => `• ${x}`).join('<br>')}
+                        </div>
+                    </div>
+                `;
+
+                tiersEl.innerHTML = plan.tiers.map(t => `
+                    <div class="content-card" style="padding: 1.25rem;">
+                        <div style="font-weight:800; margin-bottom:0.25rem;">${t.tier}: ${t.crop}</div>
+                        <div style="color: var(--text-muted); font-size: 0.9rem;">
+                            Spacing: <strong>${t.spacing ?? '--'}</strong> ${t.spacing_unit ?? ''}<br>
+                            Count: <strong>${(t.count ?? 0).toLocaleString()}</strong>
+                        </div>
+                    </div>
+                `).join('');
+
+                const b = plan.budget_breakdown;
+                budgetEl.innerHTML = `
+                    <div class="content-card" style="padding: 1rem;">Saplings/Seeds: <strong>${formatINR(b.saplings_and_seeds)}</strong></div>
+                    <div class="content-card" style="padding: 1rem;">Irrigation: <strong>${formatINR(b.irrigation_and_plumbing)}</strong></div>
+                    <div class="content-card" style="padding: 1rem;">Labor/Tools: <strong>${formatINR(b.labor_and_tools)}</strong></div>
+                    <div class="content-card" style="padding: 1rem;">Soil amendments: <strong>${formatINR(b.soil_amendments)}</strong></div>
+                    <div class="content-card" style="padding: 1rem;">Contingency: <strong>${formatINR(b.contingency)}</strong></div>
+                    <div class="content-card" style="padding: 1rem;">Total: <strong>${formatINR(b.total)}</strong></div>
+                `;
+            } catch (e) {
+                console.error(e);
+                alert('Failed to generate AI plan. Make sure the backend is running.');
+            }
+        }
+
+        function applyAIPlan() {
+            if (!_aiPlan) return;
+            // existing flow: strata uses localStorage.pendingModel + ?apply=true
+            localStorage.setItem('pendingModel', JSON.stringify(_aiPlan.apply_payload));
+            window.location.href = 'strata.html?apply=true';
+        }
+    </script>
+</body>
+
+</html>

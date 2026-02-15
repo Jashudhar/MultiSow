@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - MultiSow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=6">
+    <style>
+        .profile-header {
+            background: linear-gradient(135deg, #1a472a 0%, #2d6a4f 100%);
+            border-radius: 24px;
+            padding: 3rem;
+            color: white;
+            margin-bottom: var(--section-spacing);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .profile-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-info h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-family: var(--font-heading);
+        }
+
+        .profile-info p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--section-spacing);
+        }
+
+        @media (max-width: 768px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            font-family: var(--font-heading);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .btn-secondary {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-danger {
+            padding: 0.75rem 1.5rem;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 1rem;
+            background: #f8fafb;
+            border-radius: 12px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-content" style="background: #f8fafb; min-height: 100vh;">
+
+        <div class="symmetric-container">
+            <div class="profile-header fade-in-up">
+                <div class="profile-content">
+                    <div class="profile-avatar" id="profileAvatar">U</div>
+                    <div class="profile-info">
+                        <h1 id="profileName">User Profile</h1>
+                        <p id="profileEmail">user@example.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-grid fade-in-up fade-in-up-delay-2">
+                <div class="profile-card card-hover">
+                    <h2 class="card-title">Personal Information</h2>
+                    <div class="info-row">
+                        <span class="info-label">Full Name</span>
+                        <span class="info-value" id="fullName">John Doe</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Email</span>
+                        <span class="info-value" id="emailInfo">user@example.com</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Phone</span>
+                        <span class="info-value">+91 98765 43210</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Location</span>
+                        <span class="info-value">Wayanad, Kerala</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-secondary" onclick="openEditModal()">Edit Profile</button>
+                    </div>
+                </div>
+
+                <div class="profile-card card-hover">
+                    <h2 class="card-title">Farm Statistics</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-value">2</div>
+                            <div class="stat-label">Acres</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">18</div>
+                            <div class="stat-label">Active Crops</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">125</div>
+                            <div class="stat-label">Quintals</div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Member Since</span>
+                        <span class="info-value">January 2026</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Farm Type</span>
+                        <span class="info-value">Multi-Tier Crop System</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Subscription</span>
+                        <span class="info-value">Premium</span>
+                    </div>
+                </div>
+
+                <div class="profile-card card-hover">
+                    <h2 class="card-title">Account Settings</h2>
+                    <div class="info-row">
+                        <span class="info-label">Language</span>
+                        <span class="info-value">English</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Timezone</span>
+                        <span class="info-value">IST (UTC+5:30)</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Notifications</span>
+                        <span class="info-value">Enabled</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-secondary">Change Password</button>
+                    </div>
+                </div>
+
+                <div class="profile-card card-hover">
+                    <h2 class="card-title">Danger Zone</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.9rem;">
+                        Once you logout, you'll need to sign in again to access your account.
+                    </p>
+                    <div class="action-buttons">
+                        <button class="btn-danger" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="navigation.js?v=6"></script>
+        <script>createNavigation('profile');</script>
+        <script>
+            // Check if user is logged in
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+            }
+
+            // Load user data
+            const userEmail = localStorage.getItem('userEmail') || 'user@example.com';
+            const userName = localStorage.getItem('userName') || 'User';
+            const userInitials = userName.substring(0, 2).toUpperCase();
+
+            // Update profile information
+            document.getElementById('profileName').textContent = userName.charAt(0).toUpperCase() + userName.slice(1);
+            document.getElementById('profileEmail').textContent = userEmail;
+            document.getElementById('profileAvatar').textContent = userInitials;
+            document.getElementById('fullName').textContent = userName.charAt(0).toUpperCase() + userName.slice(1);
+            document.getElementById('emailInfo').textContent = userEmail;
+
+            function logout() {
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('userEmail');
+                    localStorage.removeItem('userName');
+                    window.location.href = 'home.html';
+                }
+            }
+
+            function openEditModal() {
+                alert('Edit profile functionality coming soon!');
+            }
+        </script>
+</body>
+
+</html>

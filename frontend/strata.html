@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MultiSow - Strata System Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=6">
+    <style>
+        /* Enhanced dropdown styling - 10% bigger */
+        .form-input,
+        select.form-input {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            background: white;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-input:focus,
+        select.form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(26, 71, 42, 0.1);
+        }
+
+        select.form-input {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%231a472a' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px;
+            padding-right: 2.5rem;
+        }
+
+        .form-input[readonly] {
+            background: #f9fafb;
+            cursor: not-allowed;
+            border-color: #e5e7eb;
+        }
+
+        .btn-secondary {
+            background: white;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(26, 71, 42, 0.2);
+        }
+
+        /* Soil and Acres selector styling */
+        .selector-card {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: var(--section-spacing);
+            border-left: 4px solid #0284c7;
+        }
+
+        .soil-selector {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid #f59e0b;
+        }
+
+        /* Soil Dropdown Styles */
+        .soil-dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .soil-dropdown {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 0.875rem 2.75rem 0.875rem 1.25rem;
+            font-size: 1rem;
+            font-weight: 600;
+            background: white;
+            border: 2px solid #d97706;
+            border-radius: 12px;
+            color: #92400e;
+            cursor: pointer;
+            min-width: 220px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(217, 119, 6, 0.15);
+        }
+
+        .soil-dropdown:hover {
+            border-color: #b45309;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .soil-dropdown:focus {
+            outline: none;
+            border-color: #b45309;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2), 0 4px 12px rgba(217, 119, 6, 0.25);
+        }
+
+        .soil-dropdown option {
+            padding: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .dropdown-arrow {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #d97706;
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .soil-dropdown:focus+.dropdown-arrow {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .selector-options {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .selector-option {
+            padding: 0.75rem 1.25rem;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        .selector-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .selector-option.active {
+            color: white;
+            border-color: transparent;
+        }
+
+        .acres-option.active {
+            background: #0284c7;
+        }
+
+        .soil-option.active {
+            background: #f59e0b;
+        }
+
+        .designer-settings-row {
+            display: grid;
+            grid-template-columns: minmax(350px, 1fr) 1.5fr;
+            gap: 1.5rem;
+            margin-bottom: var(--section-spacing);
+            align-items: start;
+        }
+
+        .designer-settings-row>div {
+            margin-bottom: 0 !important;
+            height: 100%;
+        }
+
+        @media (max-width: 1100px) {
+            .designer-settings-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .info-icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 18px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: help;
+            margin-left: 0.25rem;
+        }
+
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f2937;
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 100;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="page-header">
+            <h1><span class="material-icons">grass</span> Multi-Tier Crop System Designer</h1>
+            <p>Design your crop model with AI-powered recommendations and soil-based filtering</p>
+        </header>
+
+        <div class="designer-settings-row">
+            <!-- Soil Type Selection - Dropdown Style -->
+            <div class="selector-card soil-selector slide-in-left">
+                <div class="selector-header-flex">
+                    <div class="selector-info">
+                        <h3 class="selector-title">
+                            <span class="material-icons"
+                                style="vertical-align: middle; margin-right: 0.5rem; color: #92400e;">grass</span>Select
+                            Your Soil Type
+                            <span class="info-icon tooltip"
+                                data-tooltip="Crops will be filtered based on soil compatibility">i</span>
+                        </h3>
+                        <p class="selector-subtitle">Choose your farm's soil type for optimized crop recommendations</p>
+                    </div>
+                    <div class="soil-dropdown-wrapper">
+                        <select id="soil-dropdown" class="soil-dropdown" onchange="selectSoil(this.value)">
+                            <option value="alluvial" selected>Alluvial Soil</option>
+                            <option value="black">Black Soil (Regur)</option>
+                            <option value="red">Red Soil</option>
+                            <option value="laterite">Laterite Soil</option>
+                            <option value="desert">Desert (Arid) Soil</option>
+                            <option value="mountain">Mountain Soil</option>
+                            <option value="saline">Saline Soil</option>
+                        </select>
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                </div>
+                <div id="soil-info" class="soil-info-box" style="display: none;"></div>
+            </div>
+
+            <!-- Plot Size Slider -->
+            <div class="acres-slider-section slide-in-right">
+                <h3 class="slider-section-title">Select Your Plot Size</h3>
+                <p class="slider-section-subtitle">Use the slider to adjust your agricultural land size</p>
+
+                <div class="custom-slider-container">
+                    <div class="slider-label">Plot Size</div>
+                    <div class="slider-track-container">
+                        <div class="slider-range-labels">
+                            <span>0.5 acres</span>
+                            <span>10 acres</span>
+                        </div>
+                        <input type="range" id="acre-slider" class="custom-slider-input" min="0.5" max="10" step="0.5"
+                            value="2" oninput="updateAcresSlider(this.value)">
+                    </div>
+                    <div class="slider-value-display">
+                        <span id="acres-value">2</span><span class="slider-value-unit"> acres</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="designer-main-grid">
+            <!-- Left: Designer Panel -->
+            <div class="designer-panel-container">
+                <div class="content-card designer-card">
+                    <div class="card-header-flex">
+                        <h2 class="section-title">Design Your Model</h2>
+                        <span class="badge">Builder</span>
+                    </div>
+
+                    <!-- Tier Builders -->
+                    <div id="tier-builders" class="tier-builders">
+                        <!-- Tier sections will be added by JavaScript -->
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="designer-actions-row">
+                        <button class="btn-primary" onclick="openVisualizer()">
+                            Visualize Model
+                        </button>
+                        <button class="btn-primary" onclick="saveModel()">
+                            Save Model
+                        </button>
+                        <button class="btn-secondary" onclick="resetModel()">
+                            Reset
+                        </button>
+                        <button class="btn-secondary" onclick="optimizeModel()">
+                            Optimize
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Compatibility Alert -->
+                <div id="compatibility-alert"
+                    style="display: none; background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1.5rem; border-radius: 12px;">
+                    <div style="display: flex; gap: 1rem;">
+                        <span class="material-icons" style="font-size: 1.5rem; color: #92400e;">warning</span>
+                        <div>
+                            <h4 style="margin: 0 0 0.5rem 0; color: #92400e;">Compatibility Warning</h4>
+                            <p id="compatibility-message" style="margin: 0; color: #78350f; font-size: 0.9rem;"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: AI Assistant Panel -->
+            <div class="ai-assistant-container">
+                <div class="content-card ai-advisor-card">
+                    <div class="ai-advisor-header">
+                        <div class="ai-icon-wrapper">🤖</div>
+                        <div class="ai-header-text">
+                            <h2 class="ai-title">AI Crop Advisor</h2>
+                            <p class="ai-subtitle">Get intelligent recommendations</p>
+                        </div>
+                    </div>
+
+                    <!-- AI Chat Interface -->
+                    <div id="ai-chat-container"
+                        style="background: #f8fafb; border-radius: 12px; padding: 1rem; height: 350px; overflow-y: auto; margin-bottom: 1rem;">
+                    </div>
+
+                    <!-- Quick Analysis Button -->
+                    <button class="btn-primary" onclick="getFullAnalysis()" style="width: 100%; margin-bottom: 1rem;">
+                        <span class="material-icons"
+                            style="vertical-align: middle; margin-right: 0.5rem;">bar_chart</span>Analyze Full Model
+                    </button>
+
+                    <!-- Stats Summary -->
+                    <div id="model-stats" style="background: #f1f5f9; padding: 1rem; border-radius: 12px;">
+                        <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; font-weight: 600; color: var(--text-muted);">
+                            Current Model Stats</h4>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                            <span style="color: var(--text-muted); font-size: 0.85rem;">Soil Type:</span>
+                            <span id="current-soil" style="font-weight: 600; color: #f59e0b;">Alluvial</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                            <span style="color: var(--text-muted); font-size: 0.85rem;">Acres:</span>
+                            <span id="current-acres" style="font-weight: 600; color: #0284c7;">2</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                            <span style="color: var(--text-muted); font-size: 0.85rem;">Total Plants:</span>
+                            <span id="total-plants" style="font-weight: 600; color: var(--primary-color);">0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                            <span style="color: var(--text-muted); font-size: 0.85rem;">Completeness:</span>
+                            <span id="completeness" style="font-weight: 600;">0%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--text-muted); font-size: 0.85rem;">Est. Yield:</span>
+                            <span id="est-yield" style="font-weight: 600; color: #059669;">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visualizer Modal -->
+    <div id="visualizer-modal" class="visualizer-modal">
+        <div class="visualizer-container">
+            <div class="visualizer-header">
+                <h2 class="visualizer-title"><span class="material-icons"
+                        style="vertical-align: middle; margin-right: 0.5rem;">grass</span>Crop Model Visualizer</h2>
+                <button class="visualizer-close" onclick="closeVisualizer()">×</button>
+            </div>
+
+            <div class="visualizer-controls">
+                <div class="view-toggle">
+                    <button class="view-btn active" id="land-view-btn" onclick="switchView('land')">Land
+                        View</button>
+                    <button class="view-btn" id="aerial-view-btn" onclick="switchView('aerial')">Aerial
+                        View</button>
+                </div>
+
+                <div class="zoom-controls">
+                    <button class="zoom-btn" onclick="zoomVisualizerIn()">🔍+</button>
+                    <button class="zoom-btn" onclick="zoomVisualizerOut()">🔍-</button>
+                    <button class="zoom-btn" onclick="resetVisualizer()">⟲</button>
+                </div>
+
+                <button class="export-btn" onclick="exportVisualization()">Export Image</button>
+            </div>
+
+            <div class="visualizer-canvas-container">
+                <canvas id="crop-canvas"></canvas>
+            </div>
+
+            <div class="visualizer-help">
+                <strong>💡 Controls:</strong>
+                Click and drag to pan • Scroll to zoom (0.33x to 3x limit) • Switch between Land and Aerial views for
+                different perspectives
+            </div>
+        </div>
+    </div>
+
+    <script src="backend-api.js?v=4"></script>
+    <script src="navigation.js?v=6"></script>
+    <script>createNavigation('strata');</script>
+    <script src="preset-models.js?v=6"></script>
+    <script src="utils.js?v=4"></script>
+    <script src="crop-visualizer.js?v=4"></script>
+    <script src="strata-designer.js?v=4"></script>
+</body>
+
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MultiSow - Multi-Tier Crop System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=6">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(30, 70, 32, 0.2);
+            text-align: center;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .status-box {
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .status-checking {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            color: #92400e;
+            border: 1px solid #fcd34d;
+        }
+
+        .status-connected {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+
+        .status-disconnected {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .status-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .status-title {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            font-family: var(--font-heading);
+        }
+
+        .status-message {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all var(--transition-base);
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-body);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(30, 70, 32, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(30, 70, 32, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 4px 12px rgba(30, 70, 32, 0.15);
+            margin-left: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-green);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(30, 70, 32, 0.25);
+        }
+
+        .instructions {
+            text-align: left;
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .instructions h3 {
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-family: var(--font-heading);
+        }
+
+        .instructions ol {
+            margin-left: 1.5rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .instructions code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1><span class="material-icons" style="color: #2d6a4f;">eco</span> MultiSow</h1>
+        <p class="subtitle">Multi-Tier Crop Management System</p>
+
+        <!-- Checking Status -->
+        <div id="status-checking" class="status-box status-checking">
+            <div class="status-icon">⏳</div>
+            <div class="status-title">Checking Backend Connection...</div>
+            <div class="loader"></div>
+        </div>
+
+        <!-- Connected Status -->
+        <div id="status-connected" class="status-box status-connected hidden">
+            <div class="status-icon">✅</div>
+            <div class="status-title">Backend Connected!</div>
+            <p class="status-message">System is ready. Click below to access the application.</p>
+            <div style="margin-top: 1.5rem;">
+                <a href="home.html" class="btn btn-primary">Launch Application</a>
+                <a href="http://localhost:8000/docs" target="_blank" class="btn btn-secondary">API Documentation</a>
+            </div>
+        </div>
+
+        <!-- Disconnected Status -->
+        <div id="status-disconnected" class="status-box status-disconnected hidden">
+            <div class="status-icon"><span class="material-icons md-48" style="color: #f59e0b;">warning</span></div>
+            <div class="status-title">Backend Not Running</div>
+            <p class="status-message">The backend server needs to be started first.</p>
+
+            <div class="instructions">
+                <h3>Quick Start:</h3>
+                <ol>
+                    <li><strong>Windows:</strong> Double-click <code>run.bat</code></li>
+                    <li><strong>Mac/Linux:</strong> Run <code>./run.sh</code> in terminal</li>
+                    <li><strong>Alternative:</strong> Run <code>npm start</code></li>
+                </ol>
+            </div>
+
+            <div style="margin-top: 1.5rem;">
+                <button onclick="location.reload()" class="btn btn-primary">Retry Connection</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Backend health check
+        async function checkBackend() {
+            try {
+                const response = await fetch('http://localhost:8000/health');
+                if (response.ok) {
+                    // Backend is running - auto-redirect to home
+                    document.getElementById('status-checking').classList.add('hidden');
+                    document.getElementById('status-connected').classList.remove('hidden');
+
+                    // Auto-redirect after 1 second
+                    setTimeout(() => {
+                        window.location.href = 'home.html';
+                    }, 1000);
+                } else {
+                    showDisconnected();
+                }
+            } catch (error) {
+                showDisconnected();
+            }
+        }
+
+        function showDisconnected() {
+            document.getElementById('status-checking').classList.add('hidden');
+            document.getElementById('status-disconnected').classList.remove('hidden');
+        }
+
+        // Run check on load
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(checkBackend, 1000);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+{
+    "name": "multisow-crop-system",
+    "version": "1.0.0",
+    "description": "Multi-Tier Crop Management System - Integrated Development Environment",
+    "scripts": {
+        "prestart": "py -m pip install -r requirements.txt",
+        "start": "npx concurrently \"npm run backend\" \"npm run open-browser\" --kill-others --names \"BACKEND,BROWSER\" -c \"bgBlue.bold,bgMagenta.bold\"",
+        "backend": "py -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload",
+        "open-browser": "npx wait-on http://localhost:8000/health && npx open-cli http://localhost:8000/frontend/home.html",
+        "start:mac": "npx concurrently \"npm run backend\" \"npm run open-browser\" --kill-others --names \"BACKEND,BROWSER\" -c \"bgBlue.bold,bgMagenta.bold\""
+    },
+    "keywords": [
+        "agriculture",
+        "crop-management",
+        "fastapi",
+        "multi-tier"
+    ],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {},
+    "dependencies": {}
+}
