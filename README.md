@@ -11,11 +11,17 @@
 
 ## ✨ Key Features
 
-### 🏗️ Strata System Designer (Revamped!)
+### 🏗️ Strata System Designer
 Design complex multi-tier layouts with ease. Our **AI-powered designer** provides real-time compatibility suggestions based on:
 - **Vertical Tiers**: Overstory (15-25m), Middle Tier (5-10m), Understory (0.5-2m), and Vertical Layers.
 - **Ecological Compatibility**: 100% research-validated combinations. Fixed long-standing issues (e.g., Teak/Pepper incompatibility) to ensure synergistic growth.
 - **Real-time Validation**: Mathematical verification of plant counts and yields based on acreage and spacing.
+
+### 🧠 Core AI Logic
+Powered by `ai_advisor.py`, our system employs advanced algorithms to:
+- **Analyze Soil Compatibility**: Matches crops to specific soil pH and nutrient profiles.
+- **Optimize Stratification**: Calculates optimal vertical stacking to maximize sunlight capture.
+- **Predict Yields**: Uses historical data and biological growth models to forecast harvest volumes.
 
 ### 🧪 Soil Compatibility Analysis
 Optimized for the Indian agricultural landscape, MultiSow includes expert data for:
@@ -28,17 +34,21 @@ A command center for your farm's operations:
 - **Growth Visualization**: Track crop progress across different tiers.
 - **Smart Metrics**: Monitor water conservation (up to 70%), ROI projections, and sunlight capture.
 
+### 🔬 Agricultural Research Hub
+Direct access to the latest agricultural data:
+- **Crop Database**: Detailed growth parameters for over 50 crops.
+- **Market Trends**: Real-time price tracking and forecasting.
+- **Best Practices**: Validated cultivation guides for optimal yield.
+
+### 👤 User Profile Management
+Personalize your farming experience:
+- **Farm Settings**: Customize default location and soil type preferences.
+- **Experience Level**: Tailor recommendations based on your farming expertise.
+
 ### 🧮 Smart Resource Calculator
 Go beyond simple area calculations. The integrated calculator provides:
 - **Exact Planting Density**: Precise counts based on validated spacing formulas (offset/triangular planting support).
 - **Acre-to-Unit Conversion**: Dynamic calculations for any plot size (0.5 to 10 acres).
-
-### 🛩️ Advanced Aerial Mapping (New!)
-The revamped **Crop Model Visualizer** now offers professional-grade mapping:
-- **Representative Distribution**: Accurate plant placement across the entire plot acreage.
-- **Vertical Markers**: Purple markers indicating vertical climbers on overstory support trees.
-- **Smart Density**: Visual optimization for high-density understory crops.
-- **UX Controls**: Precision zoom (limited to 3x for usability) and pan controls with high-contrast UI.
 
 ### 🚀 Research-Backed Preset Models
 Access 6 production-ready crop models optimized for Indian regions:
@@ -46,7 +56,7 @@ Access 6 production-ready crop models optimized for Indian regions:
 2. **Karnataka Spice Garden** (Malnad)
 3. **Tamil Nadu Tropical** (Coimbatore/Madurai)
 4. **Andhra Commercial** (Godavari)
-5. **Maharashtra Coconut-Mango** (Konkan - *Fixed & Optimized*)
+5. **Maharashtra Coconut-Mango** (Konkan)
 6. **Coconut-Cocoa Premium Spice** (New Research Model)
 
 ---
@@ -63,6 +73,7 @@ Access 6 production-ready crop models optimized for Indian regions:
 1. **Double-click `run.bat`**.
 2. The script will automatically verify Python, install dependencies, and launch the server.
 3. Browser will open automatically at http://localhost:8000
+4. **Alternative**: Run `npm start` in the terminal to launch both backend and browser.
 
 #### **Mac/Linux**
 1. Run `chmod +x run.sh && ./run.sh`
@@ -84,9 +95,19 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for production deployment instructions.
 ```text
 multi_tier_crop_system/
 ├── backend/               # Python/FastAPI Application
+│   ├── main.py           # Application Entry Point
+│   ├── models.py         # SQLAlchemy Database Models
+│   ├── schemas.py        # Pydantic Data Schemas
+│   ├── crud.py           # Database Operations
+│   ├── database.py       # Database Connection Handling
+│   └── ai_advisor.py     # Core AI Stratification Logic
 ├── frontend/             # Modern UI (HTML5/CSS3/Vanilla JS)
 │   ├── home.html         # Symmetric 3-Column Home Layout
+│   ├── dashboard.html    # Farmer's Operational Dashboard
 │   ├── strata.html       # AI System Designer
+│   ├── research.html     # Agricultural Knowledge Base
+│   ├── login.html        # Authentication Portal
+│   ├── profile.html      # User Settings & Preferences
 │   ├── crop-visualizer.js # Revamped Mapping Logic
 │   ├── preset-models.js  # Validated Research Models
 │   └── styles.css        # Premium Glassmorphic Design
