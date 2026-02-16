@@ -42,9 +42,10 @@ curl http://localhost:8000/health
 ```
 
 ## Features
-- ✅ Consolidated CSS and JavaScript files
-- ✅ Optimized for production
-- ✅ Docker support
-- ✅ All buttons and sections functional
-- ✅ Responsive design
-- ✅ Modern UI with animations
+- Consolidated CSS and JavaScript files
+- Optimized for production
+- Docker support
+- All buttons and sections functional
+- Responsive design
+- Modern UI with animations
+
